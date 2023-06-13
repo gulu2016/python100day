@@ -2,6 +2,7 @@ from turtle import Turtle,Screen
 import time
 from snake import Snake
 from food import  Food
+from scoreboard import Scoreboard
 
 screen = Screen()
 # s183-1-1-1 创建屏幕，设置背景和标题
@@ -19,6 +20,7 @@ segments = []
 snake = Snake()
 
 food = Food()
+scoreboard = Scoreboard()
 
 # s186-1-1-1 监听屏幕，对应按键调用对应的函数
 screen.listen()
@@ -54,6 +56,9 @@ while game_is_on:
     # s190-1-2-1 如果snake的头和food相遇，那么food刷新位置
     if snake.head.distance(food) < 15:
         food.refresh()
+        # s191-1-2-1 当遇到food的时候，更新计分板
+        scoreboard.increase_score()
+
 
 
 screen.exitonclick()
