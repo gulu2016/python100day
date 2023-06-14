@@ -20,11 +20,20 @@ class Snake:
 
     def create_snake(self):
         for position in START_POSITIONS:
-            new_segment = Turtle("square")
-            new_segment.color("white")
-            new_segment.penup()
-            new_segment.goto(position)
-            self.segment.append(new_segment)
+            self.add_segment(position)
+
+    # s193-1-1-1 增加身体模块的函数
+    def add_segment(self,position):
+        new_segment = Turtle("square")
+        new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segment.append(new_segment)
+
+    # s193-1-1-2 延长身体的长度，找到最后一个节点的位置
+    def extend(self):
+        self.add_segment(self.segment[-1].position())
+
 
     def move(self):
         for seg_num in range(len(self.segment) - 1, 0, -1):

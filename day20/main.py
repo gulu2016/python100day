@@ -56,8 +56,21 @@ while game_is_on:
     # s190-1-2-1 如果snake的头和food相遇，那么food刷新位置
     if snake.head.distance(food) < 15:
         food.refresh()
+        # s193-1-2-1 当遇到food的时候，延长自己的身体
+        snake.extend()
         # s191-1-2-1 当遇到food的时候，更新计分板
         scoreboard.increase_score()
+
+    # s192-1-1-1 如果撞墙了，游戏结束
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        game_is_on = False
+        scoreboard.game_over()
+
+    # s193-1-2-2 当头节点撞到了其他身体节点，游戏结束
+    for seg in snake.segment[1::]:
+        if snake.head.distance(seg) < 10:
+            game_is_on = False
+            scoreboard.game_over()
 
 
 

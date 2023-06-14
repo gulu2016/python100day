@@ -20,6 +20,11 @@ class Scoreboard(Turtle):
     def update_scoreboard(self):
         self.write(f"Score:{self.score}", align=ALIGN, font=FONT)
 
+    # s192-1-2-1 游戏结束，更新字幕打印的位置
+    def game_over(self):
+        self.goto(0, 0)
+        self.write("GAME_OVER", align=ALIGN, font=FONT)
+
     def increase_score(self):
         self.score += 1
         # s191-1-1-4 每次更新之前，需要清除之前写的内容
