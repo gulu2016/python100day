@@ -1,6 +1,7 @@
 from turtle import Screen,Turtle
 from paddle import Paddle
 from ball import Ball
+from scoreboard import Scoreboard
 import time
 
 # s197-1-1-1 设置屏幕的属性
@@ -12,6 +13,7 @@ screen.title("Pong")
 screen.tracer(0)
 
 ball = Ball()
+scoreboard = Scoreboard()
 
 # s198-1-1-1 创建paddle对象
 # paddle = Turtle()
@@ -43,9 +45,26 @@ screen.onkey(l_paddle.go_down,"s")
 # s198-1-1-4 游戏启动时候就是不断刷新动画
 game_is_on = True
 while game_is_on:
-    time.sleep(0.1)
+    time.sleep(ball.move_speed)
     screen.update()
     ball.move()
 
+    # s201-1-2-1 当碰到墙壁的方向时候，ball会改变方向
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.bounce_y()
+
+    # s202-1-1-1 当ball遇到paddle的时候，改变x的方向
+    if ball.distance(r_paddle) < 50 and ball.xcor() > 340 or ball.distance(l_paddle) < 50 and ball.xcor() < -340:
+        ball.bounce_x()
+
+    # s203-1-2-1 如果ball超过了两边的范围，那么就重置球的位置
+    # s204-1-1-1 当有得分的时候，需要更新scoreboard
+    if ball.xcor() > 380:
+        ball.reset_position()
+        scoreboard.l_point()
+
+    if ball.xcor() < -380:
+        ball.reset_position()
+        scoreboard.r_point()
 
 screen.exitonclick()
