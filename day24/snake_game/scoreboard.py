@@ -10,7 +10,9 @@ class Scoreboard(Turtle):
         super().__init__()
         # s191-1-1-2 设置计分板的初始分数，颜色，位置
         self.score = 0
-        self.high_score = 0
+        # s220-1-1-1 从文件中读取最高分
+        with open("data.txt") as data:
+            self.high_score = int(data.read())
         self.color("white")
         self.penup()
         self.goto(0, 270)
@@ -25,6 +27,9 @@ class Scoreboard(Turtle):
     def reset(self):
         if self.score > self.high_score:
             self.high_score = self.score
+            # s220-1-1-2 将最高分写入文件中
+            with open("data.txt",mode="w") as data:
+                data.write(f"{self.high_score}")
         self.score = 0
         self.update_scoreboard()
 

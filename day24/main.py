@@ -10,3 +10,13 @@ with open("my_file.txt") as file:
 # s219-1-1-4 只有"w"模式下才会向一个不存在的文件中写入数据
 with open("my_file.txt",mode="a") as file:
     file.write("\nNew text")
+
+# s221-1-1-1 使用相对路径访问文件
+with open("../day23/file.txt") as file:
+    contents = file.read()
+    print(contents)
+
+# s221-1-1-2 使用绝对路径访问文件，这里无论是什么系统，在python中统一使用“/”分隔，同时不带c盘的标志
+with open("/Users/zjq/PycharmProjects/python100day_0618_new/python100day/day23/file.txt") as file:
+    contents = file.read()
+    print(contents)
