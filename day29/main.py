@@ -1,5 +1,22 @@
 from tkinter import *
 
+# ----------------
+def save():
+    # s265-1-1-4 获取输入框中的内容
+    website = input1.get()
+    email = input2.get()
+    password = input3.get()
+
+    # s265-1-1-5 将输入框中的内容保存到文件
+    with open("my_file.txt",mode="a") as file:
+        file.write("\n")
+        file.write(f"{website} | {email} | {password}")
+        # s265-1-1-6 保存之后，将内容删除
+        input1.delete(0,END)
+        input3.delete(0,END)
+# ---------------
+
+
 # s262-1-1-1 创建window，以及window的标题，四周边框
 window = Tk()
 window.title("Password Manager")
@@ -26,9 +43,13 @@ pwd_label.grid(column=0,row=3)
 
 # s264-1-1-1 创建数据框，注意columnspan参数是横跨两个格子
 input1 = Entry(width=35)
+# s265-1-1-3 输入框中带有光标
+input1.focus()
 input1.grid(column=1,row=1,columnspan=2)
 
 input2 = Entry(width=35)
+# s265-1-1-2 输入框中的初始文字
+input2.insert(0,"jjj")
 input2.grid(column=1,row=2,columnspan=2)
 
 input3 = Entry(width=16)
@@ -39,7 +60,8 @@ button1 = Button(text="Generate Password")
 button1.grid(column=2,row=3)
 
 # s264-1-1-2 添加按钮，注意也是columnspan=2
-button2 = Button(text="Add",width=35)
+# s265-1-1-1 点击按钮会触发save函数
+button2 = Button(text="Add",width=35,command=save)
 button2.grid(column=1,row=4,columnspan=2)
 
 window.mainloop()
