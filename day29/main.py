@@ -1,6 +1,31 @@
 from tkinter import *
 # s266-1-1-1 添加messagebox，需要单独导入
 from tkinter import messagebox
+from random import choice,randint,shuffle
+import pyperclip
+
+# -------------------- password generator --------- #
+def generator_password():
+    # s267-1-1-1 创建随机数列表
+    letters = ['a','b','c','d','e','f','g']
+    numbers = ['0','1','2','3','4']
+    symbols = ['!','@','#','$','%','^']
+
+    # s267-1-1-2 选取随机个数的字符
+    password_letters = [choice(letters) for _ in range(randint(2,4))]
+    password_symbols = [choice(symbols) for _ in range(randint(2,4))]
+    password_numbers = [choice(numbers) for _ in range(randint(2,4))]
+
+    # s267-1-1-3 shuffle会将字符串列表打乱
+    password_list = password_letters + password_symbols + password_numbers
+    shuffle(password_list)
+
+    # s267-1-1-4 连接字符串的简单方式
+    password = "".join(password_list)
+    # s267-1-1-5 将生成的密码填入password中
+    input3.insert(0,password)
+    # s267-1-1-6 将生成的密码写入剪贴板中
+    pyperclip.copy(password)
 
 # ----------------
 def save():
@@ -67,7 +92,7 @@ input3 = Entry(width=16)
 input3.grid(column=1,row=3)
 
 
-button1 = Button(text="Generate Password")
+button1 = Button(text="Generate Password",command=generator_password)
 button1.grid(column=2,row=3)
 
 # s264-1-1-2 添加按钮，注意也是columnspan=2
