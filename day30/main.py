@@ -17,3 +17,12 @@ else:
 finally:
     file.close()
     print("File was closed")
+
+height = float(input("Height:"))
+weight = int(input("Weight: "))
+# s270-1-1-1 raise关键字可以抛出自定义异常
+if height > 3:
+    raise ValueError("Human height can't over 3 meters")
+
+BMI = weight/(height**2)
+print(f"BMI is {BMI}")
