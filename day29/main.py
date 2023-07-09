@@ -1,4 +1,6 @@
 from tkinter import *
+# s266-1-1-1 添加messagebox，需要单独导入
+from tkinter import messagebox
 
 # ----------------
 def save():
@@ -7,13 +9,22 @@ def save():
     email = input2.get()
     password = input3.get()
 
-    # s265-1-1-5 将输入框中的内容保存到文件
-    with open("my_file.txt",mode="a") as file:
-        file.write("\n")
-        file.write(f"{website} | {email} | {password}")
-        # s265-1-1-6 保存之后，将内容删除
-        input1.delete(0,END)
-        input3.delete(0,END)
+    # s266-1-1-2 如果有字段为空，弹出警告的对话框showinfo
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showinfo(title="Oops",message="don't leave email or password empty")
+    else:
+        # s266-1-1-3 填好信息后，弹出确认对话框askokcancel
+        is_ok = messagebox.askokcancel(title=website,
+                                   message=f"These are the details entered: \n Email:{email} "
+                                   f"\nPassword:{password} \nIs it ok to save?")
+        if is_ok:
+            # s265-1-1-5 将输入框中的内容保存到文件
+            with open("my_file.txt",mode="a") as file:
+                file.write("\n")
+                file.write(f"{website} | {email} | {password}")
+                # s265-1-1-6 保存之后，将内容删除
+                input1.delete(0,END)
+                input3.delete(0,END)
 # ---------------
 
 
