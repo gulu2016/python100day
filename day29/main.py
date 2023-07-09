@@ -10,7 +10,7 @@ def generator_password():
     letters = ['a','b','c','d','e','f','g']
     numbers = ['0','1','2','3','4']
     symbols = ['!','@','#','$','%','^']
-
+ 
     # s267-1-1-2 选取随机个数的字符
     password_letters = [choice(letters) for _ in range(randint(2,4))]
     password_symbols = [choice(symbols) for _ in range(randint(2,4))]
