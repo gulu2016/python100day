@@ -53,17 +53,26 @@ def save():
         if is_ok:
             # s265-1-1-5 将输入框中的内容保存到文件
             # with open("my_file.txt",mode="a") as file:
-            with open("data.json", mode="r") as data_file:
-                #file.write("\n")
-                #file.write(f"{website} | {email} | {password}")
-                # s274-1-1-2 从json中读取数据
-                data = json.load(data_file)
+            # s275-1-1-1 添加处理异常的逻辑
+            try:
+                with open("data.json", mode="r") as data_file:
+                    #file.write("\n")
+                    #file.write(f"{website} | {email} | {password}")
+                    # s274-1-1-2 从json中读取数据
+                    data = json.load(data_file)
+            # s275-1-1-2 如果读不到文件，那么就新建文件
+            except FileNotFoundError:
+                with open("data.json","w") as data_file:
+                    json.dump(new_data,data_file,indent=4)
+            # s275-1-1-3 读到文件就正常更新
+            else:
                 # s274-1-1-3 更新读到的内容
                 data.update(new_data)
-
-            with open("data.json","w") as data_file:
-                # s274-1-1-4 将数据写到json文件中
-                json.dump(new_data,data_file,indent=4)
+                with open("data.json", "w") as data_file:
+                    # s274-1-1-4 将数据写到json文件中
+                    json.dump(new_data, data_file, indent=4)
+            # s275-1-1-4 最终都要删除输入框中的内容
+            finally:
                 # s265-1-1-6 保存之后，将内容删除
                 input1.delete(0,END)
                 input3.delete(0,END)
