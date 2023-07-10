@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice,randint,shuffle
 import pyperclip
+# s274-1-1-1 json是内置的python包，不需要安装
+import json
 
 # -------------------- password generator --------- #
 def generator_password():
@@ -33,6 +35,12 @@ def save():
     website = input1.get()
     email = input2.get()
     password = input3.get()
+    new_data = {
+        website:{
+            "email":email,
+            "password":password
+        }
+    }
 
     # s266-1-1-2 如果有字段为空，弹出警告的对话框showinfo
     if len(website) == 0 or len(password) == 0:
@@ -44,9 +52,18 @@ def save():
                                    f"\nPassword:{password} \nIs it ok to save?")
         if is_ok:
             # s265-1-1-5 将输入框中的内容保存到文件
-            with open("my_file.txt",mode="a") as file:
-                file.write("\n")
-                file.write(f"{website} | {email} | {password}")
+            # with open("my_file.txt",mode="a") as file:
+            with open("data.json", mode="r") as data_file:
+                #file.write("\n")
+                #file.write(f"{website} | {email} | {password}")
+                # s274-1-1-2 从json中读取数据
+                data = json.load(data_file)
+                # s274-1-1-3 更新读到的内容
+                data.update(new_data)
+
+            with open("data.json","w") as data_file:
+                # s274-1-1-4 将数据写到json文件中
+                json.dump(new_data,data_file,indent=4)
                 # s265-1-1-6 保存之后，将内容删除
                 input1.delete(0,END)
                 input3.delete(0,END)
