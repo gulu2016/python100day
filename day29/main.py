@@ -77,6 +77,30 @@ def save():
                 input1.delete(0,END)
                 input3.delete(0,END)
 # ---------------
+#s276-1-1-2 search_button触发的函数
+def find_password():
+    website = input1.get()
+    # s276-1-1-3 如果有文件就打开文件，如果没有的话就先创建文件
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error",message="No Data File Found.")
+    else:
+        # s276-1-1-4 搜索文件中是否存在某个website，如果存在就返回密码
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website,
+                                message=f"Email:{email}"
+                                        f"\nPassword:{password}")
+        else:
+            messagebox.showinfo(title="Error",
+                                message=f"No details for {website} exists.")
+
+
+
+# ----------------
 
 
 # s262-1-1-1 创建window，以及window的标题，四周边框
@@ -104,10 +128,10 @@ pwd_label.config(padx=10,pady=10)
 pwd_label.grid(column=0,row=3)
 
 # s264-1-1-1 创建数据框，注意columnspan参数是横跨两个格子
-input1 = Entry(width=35)
+input1 = Entry(width=16)
 # s265-1-1-3 输入框中带有光标
 input1.focus()
-input1.grid(column=1,row=1,columnspan=2)
+input1.grid(column=1,row=1)
 
 input2 = Entry(width=35)
 # s265-1-1-2 输入框中的初始文字
@@ -117,6 +141,9 @@ input2.grid(column=1,row=2,columnspan=2)
 input3 = Entry(width=16)
 input3.grid(column=1,row=3)
 
+#s276-1-1-1 添加一个search_button
+search_button = Button(text = "search",width=10,command=find_password)
+search_button.grid(column=2,row = 1)
 
 button1 = Button(text="Generate Password",command=generator_password)
 button1.grid(column=2,row=3)
